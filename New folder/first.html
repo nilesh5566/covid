@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .container {
+            width: 100%;
+            max-width: 600px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            padding: 10px;
+            margin-right: 10px;
+            float: left;
+        }
+
+        .item {
+            width: 100px;
+            height: 100px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            margin: 10px;
+            padding: 10px;
+            text-align: center;
+            cursor: move;
+        }
+
+        .item.dragging {
+            opacity: 0.5;
+        }
+
+        .success-message {
+            margin-top: 10px;
+            color: green;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 100%;
+                float: none;
+            }
+
+            .item {
+                width: 80px;
+                height: 80px;
+                margin: 5px;
+                padding: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Drag and Drop</h2>
+
+    <div class="container">
+      <h2>Container 1</h2>
+        <div class="item draggable" draggable="true">Item 1</div>
+        <div class="item draggable" draggable="true">Item 2</div>
+        <div class="item draggable" draggable="true">Item 3</div>
+        <div class="item draggable" draggable="true">Item 4</div>
+    </div>
+
+    <div class="container" id="droppable-container">
+      <h2>Container 2</h2>
+    </div>
+
+    <div class="success-message" id="success-message"></div>
+
+    <button onclick="resetContainers()">Reset</button>
+
+    <script>
+        const draggableItems = document.querySelectorAll('.draggable');
+        const droppableContainer = document.getElementById('droppable-container');
+        const successMessage = document.getElementById('success-message');
+        
+        draggableItems.forEach(item => {
+          item.addEventListener('dragstart', dragStart);
+          item.addEventListener('dragend', dragEnd);
+        });
+        
+        droppableContainer.addEventListener('dragover', dragOver);
+        droppableContainer.addEventListener('dragenter', dragEnter);
+        droppableContainer.addEventListener('dragleave', dragLeave);
+        droppableContainer.addEventListener('drop', drop);
+        
+        function dragStart(e) {
+          e.target.classList.add('dragging');
+        }
+        
+        function dragEnd(e) {
+          e.target.classList.remove('dragging');
+        }
+        
+        function dragOver(e) {
+          e.preventDefault();
+        }
+        
+        function dragEnter(e) {
+          e.target.classList.add('drag-over');
+        }
+        
+        function dragLeave(e) {
+          e.target.classList.remove('drag-over');
+        }
+        
+        function drop(e) {
+          e.preventDefault();
+          const draggedItem = document.querySelector('.dragging');
+          e.target.appendChild(draggedItem);
+          e.target.classList.remove('drag-over');
+          
+          successMessage.textContent = 'Item dropped successfully!';
+        }
+        
+        function resetContainers() {
+          droppableContainer.innerHTML = '<p>Drop items here</p>';
+          successMessage.textContent = '';
+          draggableItems.forEach(item => {
+            document.querySelector('.container').appendChild(item);
+          });
+        }
+      </script
+</body>
+
+</html>

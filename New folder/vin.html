@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Drag and Drop</title>
+  <style>
+    .container {
+      width: 300px;
+      height: 200px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px;
+    }
+    .item {
+      width: 100px;
+      height: 100px;
+      background-color: #f1f1f1;
+      border: 1px solid #999;
+      padding: 10px;
+      margin: 10px;
+      cursor: move;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="item" draggable="true">Item 1</div>
+    <div class="item" draggable="true">Item 2</div>
+    <div class="item" draggable="true">Item 3</div>
+  </div>
+  <div class="container"></div>
+
+  <script>
+    // Get all draggable items
+    const items = document.querySelectorAll('.item');
+    // Get both containers
+    const containers = document.querySelectorAll('.container');
+
+    // Add event listeners to draggable items
+    items.forEach(item => {
+      item.addEventListener('dragstart', dragStart);
+      item.addEventListener('dragend', dragEnd);
+    });
+
+    // Add event listeners to containers
+    containers.forEach(container => {
+      container.addEventListener('dragover', dragOver);
+      container.addEventListener('dragenter', dragEnter);
+      container.addEventListener('dragleave', dragLeave);
+      container.addEventListener('drop', drop);
+    });
+
+    // Store the dragged item
+    let draggedItem = null;
+
+    function dragStart() {
+      draggedItem = this;
+      setTimeout(() => {
+        this.style.display = 'none';
+      }, 0);
+    }
+
+    function dragEnd() {
+      setTimeout(() => {
+        draggedItem.style.display = 'block';
+        draggedItem = null;
+      }, 0);
+    }
+
+    function dragOver(e) {
+      e.preventDefault();
+    }
+
+    function dragEnter(e) {
+      e.preventDefault();
+      this.style.border = '2px dashed #999';
+    }
+
+    function dragLeave() {
+      this.style.border = '1px solid #ccc';
+    }
+
+    function drop() {
+      this.append(draggedItem);
+      this.style.border = '1px solid #ccc';
+    }
+  </script>
+</body>
+</html>

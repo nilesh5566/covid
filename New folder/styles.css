@@ -1,0 +1,20 @@
+.container {
+    width: 200px;
+    height: 300px;
+    border: 1px solid black;
+    float: left;
+    background-color: #2e958a;
+    margin-right: 20px;
+    padding: 10px;
+  }
+  
+  .item {
+    background-color: lightblue;
+    margin-bottom: 10px;
+    padding: 5px;
+    cursor: move;
+  }
+  
+  .success {
+    background-color: lightgreen;
+  }
